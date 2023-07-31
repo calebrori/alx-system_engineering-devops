@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#script that creates the file containing its PID
 
 # Function to handle the SIGTERM and SIGQUIT signals
 function terminate_script {
