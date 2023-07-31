@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#Script that stops 4-to_infinity_and_beyond process
+
+# Run the process "To infinity and beyond" indefinitely with a 2-second delay
+while true; do
+    echo "To infinity and beyond"
+    sleep 2
+done &
+# '&' is used to run the loop in the background so that we can find its PID
+
+# Find the PID of the running process using pgrep
+pid=$(pgrep -o -f "To infinity and beyond")
+
+# Wait for user input to stop the process
+read -rp "Press Enter to stop the process..."
+
+# Use kill to terminate the process gracefully
+kill "$pid"
