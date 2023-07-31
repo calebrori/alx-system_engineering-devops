@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#Script that displays a list of currently running processes
+
+# Get the list of processes using ps command
+# -e: Show all processes
+# -o: Define the output format
+# pid: Process ID
+# ppid: Parent Process ID
+# user: User who owns the process
+# comm: Command name
+# args: Command with all its arguments
+# --forest: Show process hierarchy in a tree-like format
+process_list=$(ps -e -o pid,ppid,user,comm,args --forest)
+
+# Print the list of processes
+echo "$process_list"
