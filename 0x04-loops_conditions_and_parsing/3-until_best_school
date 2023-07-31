@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Script displays "Best School" 10 times
+c=0
+until [ $c -eq 10 ]
+do
+	echo "Best School"
+	c=$((c+1))
+done
