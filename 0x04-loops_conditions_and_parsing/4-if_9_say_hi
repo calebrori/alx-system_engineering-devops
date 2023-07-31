@@ -8,4 +8,5 @@ do
 	if [ $c -eq 9 ]
 	then
 		echo "Hi"
-done
+fi
+done 
