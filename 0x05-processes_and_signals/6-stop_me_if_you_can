@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#Script that stops 4-to_infinity_and_beyond process
+
+# Function to handle the SIGINT signal (Ctrl + C)
+function stop_infinity {
+    echo "Stopping the process..."
+    exit
+}
+
+# Set up the trap to catch the SIGINT signal (Ctrl + C)
+trap stop_infinity SIGINT
+
+# Run the process "To infinity and beyond" indefinitely with a 2-second delay
+while true; do
+    echo "To infinity and beyond"
+    sleep 2
+done
