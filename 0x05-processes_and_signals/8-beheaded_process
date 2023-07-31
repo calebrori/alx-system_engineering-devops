@@ -1,0 +1,17 @@
+#!/usr/bin/env 
+#Script that kills the process 7-highlander
+
+# Function to handle the SIGINT signal (Ctrl + C) and SIGTERM signal
+function stop_infinity {
+    echo "I am invincible!!!"
+    exit
+}
+
+# Set up the traps to catch the SIGINT signal (Ctrl + C) and SIGTERM signal
+trap stop_infinity SIGINT SIGTERM
+
+# Run the process "To infinity and beyond" indefinitely with a 2-second delay
+while true; do
+    echo "To infinity and beyond"
+    sleep 2
+done
