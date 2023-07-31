@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#Script that displays lines containing the bash word
+
+# shellcheck disable=SC2009
+
+# Get the list of processes using ps command
+# -e: Show all processes
+# -o: Define the output format
+# pid: Process ID
+# user: User who owns the process
+# comm: Command name
+# args: Command with all its arguments
+process_list=$(ps -e -o pid,user,comm,args --forest | grep bash)
+
+# Print the list of processes containing the word "bash"
+echo "$process_list"
