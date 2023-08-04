@@ -31,8 +31,8 @@ echo "Listening Ports | PID | Process Name"
 
 # Loop through each listening socket
 while read -r line; do
-    port=$(echo "$line" | awk '{print $5}' | awk -F ":" '{print $2}')
-    pid=$(echo "$line" | awk '{print $6}' | awk -F "/" '{print $1}')
+    port=$(echo "$line" | awk '{print $4}' | awk -F ":" '{print $2}')
+    pid=$(echo "$line" | awk '{print $NF}' | awk -F "/" '{print $1}')
     process_name=$(get_program_name "$pid")
 
     # If PID is numeric and process name is not empty, print the details
