@@ -1,37 +1,37 @@
 #!/usr/bin/env bash
 
-# Check if the script is executed with superuser privileges
+# Check if the script is being run with root privileges (required to see process details)
 if [ "$EUID" -ne 0 ]; then
-  echo "Please run this script as root (or using sudo)."
-  exit 1
+    echo "This script requires root privileges. Please run with sudo or as root."
+    exit 1
 fi
 
-# Function to get program name from PID
+# Function to get the program name associated with a PID
 get_program_name() {
-  local pid=$1
-  local program_name=$(ps -p "$pid" -o comm= 2>/dev/null)
-  echo "$program_name"
+    pid=$1
+    ps -p "$pid" -o comm= 2>/dev/null
 }
 
+# Get the list of listening sockets and corresponding PIDs
+listening_sockets=$(netstat -tlnp 2>/dev/null | grep 'LISTEN')
+
+# If 'netstat' command is not available, exit
+if [ -z "$listening_sockets" ]; then
+    echo "Error: Unable to retrieve listening ports. Make sure 'netstat' command is available."
+    exit 1
+fi
+
 # Print header
-echo "Active Internet connections (only servers)"
-echo "Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name"
+echo "Listening Ports | PID | Process Name"
 
-# Get listening ports with associated PIDs and program names using netstat
-netstat -tulnep | awk '$6 == "LISTEN" && $1 ~ /^(tcp|udp)/ {
-  split($4, local_addr, ":");
-  pid = substr($NF, 0, index($NF, "/")-1);
-  program_name = get_program_name(pid);
-  printf "%-4s %-7s %-7s %-24s %-22s %-12s %s\n", $1, $2, $3, $4, $5, $6, pid "/" program_name;
-}'
+# Loop through each listening socket
+while read -r line; do
+    port=$(echo "$line" | awk '{print $4}' | awk -F ":" '{print $2}')
+    pid=$(echo "$line" | awk '{print $7}' | awk -F "/" '{print $1}')
+    process_name=$(get_program_name "$pid")
 
-# Print footer
-echo "Active UNIX domain sockets (only servers)"
-echo "Proto RefCnt Flags       Type       State         I-Node   PID/Program name    Path"
-
-# Get listening UNIX domain sockets with associated PIDs and program names using netstat
-netstat -lxnep | awk '$5 == "LISTEN" {
-  pid = substr($NF, 0, index($NF, "/")-1);
-  program_name = get_program_name(pid);
-  printf "%-4s %-8s %-11s %-11s %-12s %-8s %s\n", $1, $2, $3, $4, $5, pid "/" program_name, $9;
-}'
+    # If PID is numeric and process name is not empty, print the details
+    if [[ $pid =~ ^[0-9]+$ ]] && [ -n "$process_name" ]; then
+        echo "$port | $pid | $process_name"
+    fi
+done <<< "$listening_sockets"
