@@ -13,11 +13,16 @@ get_program_name() {
 }
 
 # Get the list of listening sockets and corresponding PIDs
-listening_sockets=$(netstat -tlnp 2>/dev/null | grep 'LISTEN')
+listening_sockets=$(ss -tlnp 2>/dev/null | grep 'LISTEN')
 
-# If 'netstat' command is not available, exit
+# If 'ss' command is not available, try 'netstat'
 if [ -z "$listening_sockets" ]; then
-    echo "Error: Unable to retrieve listening ports. Make sure 'netstat' command is available."
+    listening_sockets=$(netstat -tlnp 2>/dev/null | grep 'LISTEN')
+fi
+
+# If neither 'ss' nor 'netstat' command is available, exit
+if [ -z "$listening_sockets" ]; then
+    echo "Error: Unable to retrieve listening ports. Make sure 'ss' or 'netstat' commands are available."
     exit 1
 fi
 
@@ -26,8 +31,8 @@ echo "Listening Ports | PID | Process Name"
 
 # Loop through each listening socket
 while read -r line; do
-    port=$(echo "$line" | awk '{print $4}' | awk -F ":" '{print $2}')
-    pid=$(echo "$line" | awk '{print $7}' | awk -F "/" '{print $1}')
+    port=$(echo "$line" | awk '{print $5}' | awk -F ":" '{print $2}')
+    pid=$(echo "$line" | awk '{print $6}' | awk -F "/" '{print $1}')
     process_name=$(get_program_name "$pid")
 
     # If PID is numeric and process name is not empty, print the details
