@@ -1,3 +1,9 @@
+#Ensure that pip3 is installed
+
+  package { 'python3-pip':
+  ensure => installed,
+}
+
 #Installs puppet-lint package
 
 package { 'flask':
