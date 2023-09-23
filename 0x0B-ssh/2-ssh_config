@@ -2,7 +2,7 @@
 #Script that connects to server without typing a password
 
 Host *
-	PassowrdAuthentication no
+	PasswordAuthentication no
 	IdentityFile ~/.ssh/school
 	SendEnv LANG LC_*
 	HashKnownHosts yes
