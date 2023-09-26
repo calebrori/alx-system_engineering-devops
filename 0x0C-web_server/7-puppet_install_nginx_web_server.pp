@@ -1,7 +1,5 @@
 #install and configure an Nginx server using Puppet
 
-#Using Puppet| Install Nginx server, setup and configuration
-
 package { 'nginx':
   ensure => 'installed'
 }
