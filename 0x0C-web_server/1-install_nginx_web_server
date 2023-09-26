@@ -2,12 +2,13 @@
 # Update package list and install Nginx
 sudo apt-get update
 sudo apt-get install -y nginx
+sudo chown -R ubuntu /var/www
 
 # Configure Nginx to listen on port 80
 sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
 
 # Create an HTML file with "Hello World!"
-echo "<html><body><h1>Hello World!</h1></body></html>" | sudo tee /var/www/html/index.html > /dev/null
+echo "<html><body><h1>Hello World!</h1></body></html>" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
 
 # Restart Nginx (without using systemctl)
 sudo service nginx restart
