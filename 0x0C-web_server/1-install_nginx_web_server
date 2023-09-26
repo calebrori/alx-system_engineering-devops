@@ -11,7 +11,7 @@ sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-availabl
 echo "<html><body><h1>Hello World!</h1></body></html>" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
 
 # Restart Nginx (without using systemctl)
-sudo service nginx restart
+sudo service nginx start
 
 # Print a message indicating the setup is complete
 echo "Nginx has been installed and configured. It is now listening on port 80."
