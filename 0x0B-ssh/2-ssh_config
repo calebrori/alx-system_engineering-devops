@@ -25,7 +25,7 @@ Host *
 #   ForwardX11 no
 #   ForwardX11Trusted yes
     PasswordAuthentication no
-#   HostbasedAuthentication no
+    HostbasedAuthentication no
 #   GSSAPIAuthentication no
 #   GSSAPIDelegateCredentials no
 #   GSSAPIKeyExchange no
