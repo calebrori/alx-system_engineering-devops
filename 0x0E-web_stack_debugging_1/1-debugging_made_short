@@ -2,4 +2,4 @@
 # same as task 0 but short and sweet
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 sudo service nginx restart
-kill "$(pgrep "nginx" |head -l)"
+kill "$(pgrep "nginx" | head -l)"
