@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 #script to install and configure HAProxy on lb-01 server
-apt-get -y update
-apt-get -y install haproxy=2.8.\*
-# Configure haproxy configuration file to distribute requests using a roundrobin algorithm
-echo '
-frontend gang-gang.tech
-        bind 0:80
-        default_backend web_servers
-backend web_servers
+sudo apt-get -y update
+apt-get -y install haproxy
+
+# edit config file
+server_config=\
+"
+frontend  gang-gang.tech
+        bind *:80
+        mode http
+        default_backend gang-gang.tech
+backend gang-gang.tech
         balance roundrobin
-           server 332201-web-01 35.153.255.129:80 check
-           server 332201-web-02 100.26.226.51:80 check
-' >> /etc/haproxy/haproxy.cfg
-# Restart HAproxy service
-service haproxy restart
+        server 332201-web-01 35.153.255.129:80 check
+        server 332201-web-02 100.26.226.51:80 check
+"
+echo "$server_config" | sudo tee -a /etc/haproxy/haproxy.cfg
+echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+sudo service haproxy restart
