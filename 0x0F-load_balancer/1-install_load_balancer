@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 #script to install and configure HAProxy on lb-01 server
-#!/usr/bin/env bash
-# configures a new HAproxy as a load balancer
-# Install HAproxy on a server
 apt-get -y update
 apt-get -y install haproxy=2.8.\*
 # Configure haproxy configuration file to distribute requests using a roundrobin algorithm
