@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#script configuring Nginx server with a custom header
 sudo apt-get update
 sudo apt-get install -y nginx
 echo "Successfully Installed" | sudo tee /var/www/html/index.html
@@ -9,6 +10,7 @@ sudo sed -i "s/server_name _;/$new_string/" /etc/nginx/sites-enabled/default
 echo "Bummer no success" | sudo tee /var/www/html/404.html
 new_string="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
 sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
+
 #HTTP response header
 sudo sed -i "/server_name _/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-enabled/default
 #syntax errors test
