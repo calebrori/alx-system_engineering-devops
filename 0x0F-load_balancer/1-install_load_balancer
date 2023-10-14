@@ -9,8 +9,8 @@ server_config=\
 frontend  gang-gang.tech
         bind *:80
         mode http
-        default_backend gang-gang
-backend gang-gang
+        default_backend gang-gang.tech
+backend gang-gang.tech
         balance roundrobin
         server 332201-web-01 35.153.255.129:80 check
         server 332201-web-02 100.26.226.51:80 check
