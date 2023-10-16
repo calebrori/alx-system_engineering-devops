@@ -1,0 +1,11 @@
+#
+# navigate to before.rules
+# add custom rule before the filter chain
+
+*nat
+:PREROUTING ACCEPT [0:0]
+-A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
+COMMIT
+
+# enable ipv4 port forwarding
+net.ipv4.ip_forward=1
