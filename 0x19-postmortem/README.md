@@ -1,5 +1,5 @@
 # Account Suspension Incident
-![](https://t3.ftcdn.net/jpg/04/92/09/72/240_F_492097246_yagE8x9Uk8M9IekPy7GBuE0x1Uoa7esD.jpg)
+![](https://photos.app.goo.gl/7EycpyTt1snfxJBc7)
 
 The outage resulted from a security breach leading to unauthorized access to GitHub's authentication systems, allowing attackers to suspend accounts at will.
 
